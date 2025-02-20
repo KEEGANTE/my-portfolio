@@ -13,7 +13,7 @@ class PortfolioPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Keegan Mboya | Tech & Design'),
+        title: const Text('Keegan Mboya | Tech & Design 🚀'),
         centerTitle: true,
         actions: [
           IconButton(
@@ -29,7 +29,24 @@ class PortfolioPage extends StatelessWidget {
       body: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(16.0),
-        color: themeProvider.isDarkMode ? Colors.black : Colors.white,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors:
+                themeProvider.isDarkMode
+                    ? [Colors.black, Colors.deepPurple.shade900]
+                    : [Colors.blueGrey.shade100, Colors.white],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          image:
+              themeProvider.isDarkMode
+                  ? const DecorationImage(
+                    image: AssetImage('assets/space_image.jpg'),
+                    fit: BoxFit.cover,
+                    opacity: 0.3,
+                  )
+                  : null,
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -42,73 +59,91 @@ class PortfolioPage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color:
-                    themeProvider.isDarkMode
-                        ? Colors.white
-                        : Colors.black, // Dynamic color
+                color: themeProvider.isDarkMode ? Colors.white : Colors.black,
+                shadows: [
+                  Shadow(
+                    blurRadius: 10,
+                    color: Colors.blueAccent,
+                    offset: Offset(2, 2),
+                  ),
+                ],
               ),
               child: AnimatedTextKit(
                 animatedTexts: [
-                  TypewriterAnimatedText('Keegan Mboya'),
+                  TypewriterAnimatedText('👨‍💻 Keegan Mboya'),
+                  TypewriterAnimatedText('🚀 Security Analyst | Flutter Dev'),
                   TypewriterAnimatedText(
-                    'Security Analyst | Flutter Developer | Streamer',
+                    '🌌 Poster Designer | Canva Enthusiast',
                   ),
-                  TypewriterAnimatedText('Poster Designer | Canva Enthusiast'),
                 ],
                 repeatForever: true,
               ),
             ),
             const SizedBox(height: 20),
-            Wrap(
-              spacing: 10,
-              children: [
-                _socialButton(context, 'GitHub', 'https://github.com/KEEGANTE'),
-                _socialButton(
-                  context,
-                  'LinkedIn',
-                  'https://www.linkedin.com/in/keegan-mboya-024337294/',
-                ),
-                _socialButton(
-                  context,
-                  'YouTube',
-                  'https://www.youtube.com/@keegan7086',
-                ),
-                _socialButton(
-                  context,
-                  'Instagram',
-                  'https://www.instagram.com/its_keegan_btw/',
-                ),
-              ],
+            const Text(
+              "Hi there! 👋 I'm Keegan, a passionate tech enthusiast with skills in security analysis, Flutter development, and graphic design. I love building secure apps and designing creative posters!",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 18),
             ),
             const SizedBox(height: 30),
+            _socialLinks(context),
+            const SizedBox(height: 30),
             const Text(
-              'My Canva Work',
+              '🖼️ My Canva Work',
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
-            Wrap(
-              spacing: 10,
-              children: [
-                _socialButton(
-                  context,
-                  'Poster 1',
-                  'https://www.canva.com/design/DAGT24noExw/GQykZryh0WmT6v-hU6ZBOQ/edit?utm_content=DAGT24noExw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton',
-                ),
-                _socialButton(
-                  context,
-                  'Poster 2',
-                  'https://www.canva.com/design/DAGeK7Flycw/nnE2v7ixYRE3c39Ffo-0ew/edit?utm_content=DAGeK7Flycw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton',
-                ),
-              ],
-            ),
+            _portfolioLinks(context),
           ],
         ),
       ),
     );
   }
 
+  static Widget _socialLinks(BuildContext context) {
+    return Wrap(
+      spacing: 10,
+      children: [
+        _socialButton(context, 'GitHub 🚀', 'https://github.com/KEEGANTE'),
+        _socialButton(
+          context,
+          'LinkedIn 🌍',
+          'https://www.linkedin.com/in/keegan-mboya-024337294/',
+        ),
+        _socialButton(
+          context,
+          'YouTube 📺',
+          'https://www.youtube.com/@keegan7086',
+        ),
+        _socialButton(
+          context,
+          'Instagram 📸',
+          'https://www.instagram.com/its_keegan_btw/',
+        ),
+      ],
+    );
+  }
+
+  static Widget _portfolioLinks(BuildContext context) {
+    return Wrap(
+      spacing: 10,
+      children: [
+        _socialButton(
+          context,
+          'Poster 1 🎨',
+          'https://www.canva.com/design/DAGT24noExw/GQykZryh0WmT6v-hU6ZBOQ/edit?utm_content=DAGT24noExw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton',
+        ),
+        _socialButton(
+          context,
+          'Poster 2 🎨',
+          'https://www.canva.com/design/DAGeK7Flycw/nnE2v7ixYRE3c39Ffo-0ew/edit?utm_content=DAGeK7Flycw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton',
+        ),
+      ],
+    );
+  }
+
   static Widget _socialButton(BuildContext context, String label, String url) {
-    return ElevatedButton(
+    return ElevatedButton.icon(
       onPressed: () async {
         Uri uri = Uri.parse(url);
         if (await canLaunchUrl(uri)) {
@@ -121,10 +156,14 @@ class PortfolioPage extends StatelessWidget {
         }
       },
       style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.deepPurple.shade900,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         textStyle: const TextStyle(fontSize: 16),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        shadowColor: Colors.blueAccent,
       ),
-      child: Text(label),
+      icon: const Icon(Icons.link, color: Colors.white),
+      label: Text(label, style: const TextStyle(color: Colors.white)),
     );
   }
 }
